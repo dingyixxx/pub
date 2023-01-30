@@ -2,3 +2,20 @@
     height: 100vh;
 }
 
+.logo{
+    height: 40px;
+    line-height: 40px;
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    position: sticky;
+    left: 0;
+    top: 0;
+    flex-basis: 40px;
+}
+
+.ant-layout-sider-children{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}

@@ -18,11 +18,8 @@ export default function NewsSandBox(props) {
   return (
     <Layout>
       <SideMenu collapsed={collapsed} setCollapsed={setCollapsed}></SideMenu>
-      
-
       <Layout className="site-layout">
       <TopHeader collapsed={collapsed} setCollapsed={setCollapsed} ></TopHeader>
-      
         <Content
           style={{
             margin: '24px 16px',
@@ -32,7 +29,6 @@ export default function NewsSandBox(props) {
           }}
         >
                 <Outlet ></Outlet>
-
         </Content>
       </Layout>
 

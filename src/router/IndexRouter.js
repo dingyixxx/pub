@@ -30,13 +30,13 @@ export default function IndexRouter() {
         <Routes>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/'  element={<AuthCom><NewsSandBox ></NewsSandBox></AuthCom>} >
+        <Route path='/'  element={<Redirect to='/home'></Redirect>}></Route>
             <Route path='/home' element={<Home></Home>}></Route>
             <Route path='/user-manage/list' element={<UserList></UserList>}></Route>
             <Route path='/right-manage/right/list' element={<RightList></RightList>}></Route>
             <Route path='/right-manage/role/list' element={<RoleList></RoleList>}></Route>
             <Route path='*'  element={<NoPermission></NoPermission>}></Route>
         </Route>
-        <Route path='/'  element={<Redirect to='/home'></Redirect>}></Route>
         </Routes>
     </HashRouter>
   )
