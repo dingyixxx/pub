@@ -28,9 +28,19 @@ export default function RightList() {
       icon: <ExclamationCircleFilled />,
       content: 'Some descriptions',
       onOk() {
-        axios .delete("http://127.0.0.1:5000/rights/"+record.id).then(res=>{
-          console.log(res)
+
+        if(record.grade===1) {
+            axios .delete("http://127.0.0.1:5000/rights/"+record.id).then(res=>{
+                // initData()
+                
         })
+        }else{
+            axios .delete("http://127.0.0.1:5000/children/"+record.id).then(res=>{
+                // initData()
+
+        })
+        }
+        
       },
       onCancel() {
         console.log('Cancel');
@@ -38,8 +48,11 @@ export default function RightList() {
     });
   };
   const [dataSource, setdataSource] = useState([])
-  useEffect(() => { axios .get("http://127.0.0.1:5000/rights?_embed=children") .then((res) => {
-  setdataSource(handleRightTreeData(res.data))}) }, []);
+  function initData() {
+    axios .get("http://127.0.0.1:5000/rights?_embed=children") .then((res) => {
+  setdataSource(handleRightTreeData(res.data))})
+  }
+  useEffect(() => { initData() }, []);
   const columns = [
     {
       title: 'ID',
@@ -91,9 +104,6 @@ export default function RightList() {
   ];
 
   return (
-    <div>
-      <Table columns={columns} dataSource={dataSource} />
-
-    </div>
+    <Table columns={columns} dataSource={dataSource} pagination={{pageSize:4}}/>
   )
 }

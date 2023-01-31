@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Layout, Menu, theme } from "antd";
+import React, { useState, useEffect,useMemo } from "react";
+import { connect } from "react-redux";
+import getRoutesAction from '../../react-redux/getRoutesAction'
+import store from '../../react-redux/store'
 import axios from "axios";
+import { Layout, Menu, theme } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -30,16 +33,20 @@ function handleData(data) {
     const { key, title, children } = item;
     if (children && children.length > 0) { item.children = handleData(children); }
     if (children && children.length === 0) { delete item.children; }
-    return getItem(title, key, <UserOutlined></UserOutlined>, item.children);
+    const aaa= getItem(title, key, <UserOutlined></UserOutlined>, item.children);
+    return aaa
   });
 }
-export default function SideMenu(props) {
-  const [items, setitems] = useState([]);
+function SideMenu(props) {
+    const items=useMemo(()=>handleData(props.routesRawData),[props.routesRawData])
   const navi = useNavigate();
   const location = useLocation();
   const [selectedKeys, setselectedKeys] = useState([location.pathname]);
   const [openKeys, setopenKeys] = useState([]);
-  useEffect(() => { axios .get("http://127.0.0.1:5000/rights?_embed=children") .then((res) => setitems(handleData(res.data))); }, []);
+  useEffect(() => {
+    if(props.routesRawData.length===0){
+        props.dispatch(getRoutesAction())
+    }}, []);
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/children?_expand=right").then((res) => { setopenKeys([ res.data.filter((item) => { return item.key === location.pathname; })[0]?.right.key, ]); });
   }, []);
@@ -63,3 +70,8 @@ export default function SideMenu(props) {
     </Sider>
   );
 }
+
+export default connect(state => {
+   return { routesRawData:state.routesRawData}
+	})(SideMenu
+)
