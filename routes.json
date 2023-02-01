@@ -71,6 +71,24 @@
       "region": "亚洲",
       "roleId": 3,
       "id": 8
+    },
+    {
+      "username": "丁一",
+      "password": "111111",
+      "roleId": 1,
+      "region": "",
+      "roleState": true,
+      "default": false,
+      "id": 9
+    },
+    {
+      "username": "dingyixxx1",
+      "password": "1234567",
+      "roleId": 2,
+      "region": "欧洲",
+      "roleState": true,
+      "default": false,
+      "id": 10
     }
   ],
   "roles": [
