@@ -10,7 +10,7 @@ export default function *watchSaga(){
 
 function *getRoutesData(params) {
     let result=yield call( ()=>{
-       return  axios .get("http://127.0.0.1:5000/rights?_embed=children").then(res=>{
+       return  axios.get("http://127.0.0.1:5000/rights?_embed=children").then(res=>{
         return res.data
     })
     })

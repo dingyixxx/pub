@@ -13,6 +13,8 @@ export default function RoleList() {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [treeData, settreeData] = useState([])
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [roleId, setroleId] = useState('')
   const onExpand = (expandedKeysValue) => {
     console.log('onExpand', expandedKeysValue);
     // if not set autoExpandParent to false, if children expanded, parent can not collapse.
@@ -21,28 +23,28 @@ export default function RoleList() {
     setAutoExpandParent(false);
   };
   const onCheck = (checkedKeysValue) => {
-    console.log('onCheck', checkedKeysValue);
     setCheckedKeys(checkedKeysValue);
   };
+  
   const onSelect = (selectedKeysValue, info) => {
-    console.log('onSelect', info);
     setSelectedKeys(selectedKeysValue);
   };
-
-  useEffect(() => {
-    initdata()
-  }, []);
+  useEffect(() => { initdata() }, []);
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/rights?_embed=children").then(res=>{
       settreeData(res.data)
     })
   }, []);
-
-
-  const showModal = () => {
+  const showModal = (record) => {
     setisModalOpen(true);
   };
-  const handleOk = () => {
+   const  handleOk = async () => {
+    setConfirmLoading(true);
+   await axios.patch("http://127.0.0.1:5000/roles/" + roleId,{
+      rights:checkedKeys
+    })
+    await initdata()
+    setConfirmLoading(false);
     setisModalOpen(false);
   };
   const handleCancel = () => {
@@ -95,11 +97,10 @@ export default function RoleList() {
       render: (_, record) => (
         <Space size="middle">
             <Button danger shape="circle" onClick={() => { showConfirm(record); }} icon={<DeleteOutlined />}  />
-            <Button type="primary"shape="circle" onClick={()=> {showModal();setCheckedKeys(record.rights)}} icon={<EditOutlined />}/>
+            <Button type="primary"shape="circle" onClick={()=> {showModal(record);setCheckedKeys(record.rights);setroleId(record.id)}} icon={<EditOutlined />}/>
             <Modal title="角色设置权限" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}   okText="确定"
-      cancelText="取消" >
+      cancelText="取消" confirmLoading={confirmLoading}>
                <Tree
-               checkStrictly
                   checkable
                   onExpand={onExpand}
                   expandedKeys={expandedKeys}
