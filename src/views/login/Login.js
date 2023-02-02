@@ -27,7 +27,7 @@ const particlesLoaded = useCallback(async container => {
 }, []);
   return (
     <div className={style.loginPage}>
-      <Particles id="tsparticles"  init={particlesInit} loaded={particlesLoaded} />
+      <Particles id="tsparticles" url="http://foo.bar/particles.json" init={particlesInit} loaded={particlesLoaded} />
       <div className={style.login_form}>
       <Form name="basic" labelCol={{ span: 8, }} wrapperCol={{ span: 16, }} style={{ maxWidth: 600, }} onFinish={()=>{
         onFinish()
