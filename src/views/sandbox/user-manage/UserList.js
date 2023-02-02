@@ -18,6 +18,7 @@ export default function UserList() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [roleOptions, setroleOptions] = useState([])
   const [regionOptions, setregionOptions] = useState([])
+  console.log("🚀 ~ file: UserList.js:21 ~ UserList ~ regionOptions", regionOptions)
   const [regionIsDisabled, setregionIsDisabled] = useState(false)
   useEffect(() => { axios.get('http://127.0.0.1:5000/regions').then(res=>setregionOptions(res.data)) }, []);
   useEffect(() => { axios.get('http://127.0.0.1:5000/roles').then(res=>setroleOptions(res.data.map(item=>{
@@ -90,8 +91,10 @@ export default function UserList() {
     {
       title: "区域",
       dataIndex: "region",
-      key: "id",
+      key: "region",
       render: (text) => <span>{text===""?"全球":text}</span>,
+      filters:regionOptions.map(item=>{return {...item,text:item.value}}).concat([{text:"全球",value:""}]),
+      onFilter: (value, record) => record.region === value
     },
 
     {

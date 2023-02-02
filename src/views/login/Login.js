@@ -4,9 +4,14 @@ import { useNavigate } from "react-router-dom";
 import style from "./Login.module.scss";
 import { Button, Checkbox, Form, Input } from "antd";
 import Particles from "react-tsparticles";
+import { loadFountainPreset } from "tsparticles-preset-fountain";
 import { loadFull } from "tsparticles";
+import axios from "axios";
 const onFinish = (values) => {
   console.log('Success:', values);
+  axios.get("http://127.0.0.1:5000/users?_expand=role").then(res=>{
+    console.log(res)
+  })
   localStorage.setItem('token',123)
 };
 const onFinishFailed = (errorInfo) => {
@@ -17,22 +22,25 @@ const onFinishFailed = (errorInfo) => {
 export default function Login() {
   const navi = useNavigate();
   const location = useLocation();
-  const particlesInit = useCallback(async engine => {
-    console.log(engine);
-    await loadFull(engine);
-}, []);
+ 
+const customInit=async (engine)=>{
+  // this adds the preset to tsParticles, you can safely use the
+  await loadFountainPreset(engine);
+}
+const options = {
+  preset: "fountain",
+};
 
-const particlesLoaded = useCallback(async container => {
-    await console.log(container);
-}, []);
   return (
+    <div>
+    <Particles id="tsparticles" init={customInit}  options={options} />
     <div className={style.loginPage}>
-      <Particles id="tsparticles" url="http://foo.bar/particles.json" init={particlesInit} loaded={particlesLoaded} />
       <div className={style.login_form}>
-      <Form name="basic" labelCol={{ span: 8, }} wrapperCol={{ span: 16, }} style={{ maxWidth: 600, }} onFinish={()=>{
+      <Form name="basic" labelCol={{ span: 5, }} wrapperCol={{ span: 16, }} onFinish={()=>{
         onFinish()
         navi(-1)
       }} onFinishFailed={onFinishFailed} autoComplete="off" >
+        <h1 style={{textAlign:"center", color:'black'}}>小干拌</h1>
     <Form.Item label="用户名" name="username" rules={[ { required: true, message: '请输入用户名', } ]} >
       <Input />
     </Form.Item>
@@ -43,7 +51,7 @@ const particlesLoaded = useCallback(async container => {
 
     <Form.Item
       wrapperCol={{
-        offset: 8,
+        offset: 11,
         span: 16,
       }}
     >
@@ -56,7 +64,7 @@ const particlesLoaded = useCallback(async container => {
 
 
     </div>
-  
+    </div>
   );
 }
 

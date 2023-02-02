@@ -1,15 +1,18 @@
 .login_form{
-    width: 50vw;
-    height: 40vh;
+    width: 40vw;
+    height: 30vh;
     position: absolute;
-    left: 25vw;
-    top: 30vh;
+    left: 30vw;
+    top: 20vh;
     background-color: rgba(0,0,0,0.3);
-    color: white;
+    border-radius: 16px;
+    color: black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     // align-items: center;
+    z-index: 3;
+
 }
 
 
@@ -19,5 +22,5 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: rgba(11, 83, 121, 0.8);
+    z-index: 2;
 }

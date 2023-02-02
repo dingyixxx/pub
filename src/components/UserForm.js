@@ -37,7 +37,6 @@ export  default  forwardRef((props,ref)=>{
             rules={!regionIsDisabled?[ { required: true, message: '请选择区域', }, ]:''}>
               <Select options={regionOptions} disabled={regionIsDisabled} />
             </Form.Item>
-           
           </Form>)
       
    
