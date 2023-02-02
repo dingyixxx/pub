@@ -4,9 +4,8 @@ import { Space, Table, Tag, Button, Modal, Popover, Select,Form, Input} from "an
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 export  default  forwardRef((props,ref)=>{
+  const {regionIsDisabled,setregionIsDisabled}=props
     const {roleOptions,regionOptions}=props
-    const [regionDisabled, setregionDisabled] = useState(false)
-    
     
    return ( <Form
             ref={ref}
@@ -26,17 +25,17 @@ export  default  forwardRef((props,ref)=>{
                 <Select options={roleOptions} onChange={ (value) => {
                 if(value===1){
                     ref.current.setFieldValue('region','')
-                    setregionDisabled(true)
+                    setregionIsDisabled(true)
                 }else{
-                    setregionDisabled(false)
+                  setregionIsDisabled(false)
 
                 }
               }}/>
             </Form.Item>
 
             <Form.Item name="region" label="区域"
-            rules={!regionDisabled?[ { required: true, message: '请选择区域', }, ]:''}>
-              <Select options={regionOptions} disabled={regionDisabled||props.regionIsDisabled} />
+            rules={!regionIsDisabled?[ { required: true, message: '请选择区域', }, ]:''}>
+              <Select options={regionOptions} disabled={regionIsDisabled} />
             </Form.Item>
            
           </Form>)

@@ -73,22 +73,85 @@
       "id": 8
     },
     {
-      "username": "丁一",
-      "password": "111111",
+      "username": "丁一2222",
+      "password": "1111112222",
+      "roleId": 2,
+      "region": "亚洲",
+      "roleState": true,
+      "default": false,
+      "id": 9,
+      "role": {
+        "id": 1,
+        "roleName": "超级管理员",
+        "roleType": 1,
+        "rights": [
+          "/user-manage",
+          "/user-manage/add",
+          "/user-manage/delete",
+          "/user-manage/update",
+          "/user-manage/list",
+          "/right-manage",
+          "/right-manage/role/list",
+          "/right-manage/right/list",
+          "/right-manage/role/update",
+          "/right-manage/role/delete",
+          "/right-manage/right/update",
+          "/right-manage/right/delete",
+          "/news-manage",
+          "/news-manage/list",
+          "/news-manage/add",
+          "/news-manage/update/:id",
+          "/news-manage/preview/:id",
+          "/news-manage/draft",
+          "/news-manage/category",
+          "/audit-manage",
+          "/audit-manage/audit",
+          "/audit-manage/list",
+          "/publish-manage",
+          "/publish-manage/unpublished",
+          "/publish-manage/published",
+          "/publish-manage/sunset",
+          "/home"
+        ]
+      },
+      "roleName": "超级管理员"
+    },
+    {
+      "username": "dingyixxx333",
+      "password": "1234567333",
       "roleId": 1,
       "region": "",
       "roleState": true,
       "default": false,
-      "id": 9
-    },
-    {
-      "username": "dingyixxx1",
-      "password": "1234567",
-      "roleId": 2,
-      "region": "欧洲",
-      "roleState": true,
-      "default": false,
-      "id": 10
+      "id": 10,
+      "role": {
+        "id": 2,
+        "roleName": "区域管理员",
+        "roleType": 2,
+        "rights": [
+          "/home",
+          "/user-manage",
+          "/user-manage/add",
+          "/user-manage/delete",
+          "/user-manage/update",
+          "/user-manage/list",
+          "/news-manage",
+          "/news-manage/list",
+          "/news-manage/add",
+          "/news-manage/update/:id",
+          "/news-manage/preview/:id",
+          "/news-manage/draft",
+          "/news-manage/category",
+          "/audit-manage",
+          "/audit-manage/audit",
+          "/audit-manage/list",
+          "/publish-manage",
+          "/publish-manage/unpublished",
+          "/publish-manage/published",
+          "/publish-manage/sunset"
+        ]
+      },
+      "roleName": "区域管理员"
     }
   ],
   "roles": [

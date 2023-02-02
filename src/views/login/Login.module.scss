@@ -1,0 +1,23 @@
+.login_form{
+    width: 50vw;
+    height: 40vh;
+    position: absolute;
+    left: 25vw;
+    top: 30vh;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+}
+
+
+.loginPage{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(11, 83, 121, 0.8);
+}

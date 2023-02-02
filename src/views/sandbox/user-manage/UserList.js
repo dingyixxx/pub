@@ -9,8 +9,11 @@ const { confirm } = Modal;
 
 export default function UserList() {
   const userInfoForm=useRef()
+  const [formMode, setformMode] = useState('')
   const [dataSource, setdataSource] = useState([])
   const [isModalOpen, setisModalOpen] = useState(false)
+  const [currentUserId, setcurrentUserId] = useState('')
+  const [currentUserInfo, setcurrentUserInfo] = useState({})
   const [modalTitle, setmodalTitle] = useState('')
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [roleOptions, setroleOptions] = useState([])
@@ -23,14 +26,17 @@ export default function UserList() {
   useEffect(() => { initdata() }, []);
 
   const showModal = (value,record) => { 
-  
+    setcurrentUserId(record.id)
+    setformMode(value)
     setisModalOpen(true);
     setTimeout(()=>{
       if(value==='add'){
         setmodalTitle('新增用户')
+        setregionIsDisabled(false)
         userInfoForm.current.resetFields()
       }else{
         console.log(record)
+        setcurrentUserInfo(record)
         if(record.roleId===1){
           setregionIsDisabled(true)
         }else{
@@ -120,26 +126,18 @@ export default function UserList() {
       cancelText="取消" 
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
-      onOk={() => {
-        userInfoForm.current.validateFields()
-          .then((values) => {
-            setConfirmLoading(true);
-            axios
-            .post("http://127.0.0.1:5000/users",{...values,  
-            "roleState": true,
-            "default": false,})
-            .then(async (res) => {
-             await initdata()
-             setConfirmLoading(false);
-             setisModalOpen(false);
-            });
-          })
-          .catch((info) => {
-            console.log('Validate Failed:', info);
-          });
+      onOk={async () => {
+      const values=await  userInfoForm.current.validateFields()
+      setConfirmLoading(true);
+      if(formMode==='add'){ 
+        await axios.post("http://127.0.0.1:5000/users",{...values, "roleState": true, "default": false,})
+      }else{ await axios.patch("http://127.0.0.1:5000/users/"+currentUserId,{...currentUserInfo,...values})}
+      await initdata()
+      setConfirmLoading(false);
+      setisModalOpen(false);
       }}
     >
-     <UserForm ref={userInfoForm} roleOptions={roleOptions} regionOptions={regionOptions} regionIsDisabled={regionIsDisabled}></UserForm>
+     <UserForm ref={userInfoForm} roleOptions={roleOptions} regionOptions={regionOptions} regionIsDisabled={regionIsDisabled} setregionIsDisabled={setregionIsDisabled}></UserForm>
     </Modal>
      <Table
     rowKey='id'
