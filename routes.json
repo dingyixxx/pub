@@ -16,7 +16,28 @@
       "default": false,
       "region": "亚洲",
       "roleId": 2,
-      "id": 2
+      "id": 2,
+      "role": {
+        "id": 3,
+        "roleName": "区域编辑",
+        "roleType": 3,
+        "rights": [
+          "/home",
+          "/news-manage",
+          "/news-manage/list",
+          "/news-manage/add",
+          "/news-manage/update/:id",
+          "/news-manage/preview/:id",
+          "/news-manage/draft",
+          "/audit-manage",
+          "/audit-manage/list",
+          "/publish-manage",
+          "/publish-manage/unpublished",
+          "/publish-manage/published",
+          "/publish-manage/sunset"
+        ]
+      },
+      "roleName": "区域编辑"
     },
     {
       "username": "钢蛋",
@@ -61,7 +82,28 @@
       "default": false,
       "region": "亚洲",
       "roleId": 3,
-      "id": 7
+      "id": 7,
+      "role": {
+        "id": 3,
+        "roleName": "区域编辑",
+        "roleType": 3,
+        "rights": [
+          "/home",
+          "/news-manage",
+          "/news-manage/list",
+          "/news-manage/add",
+          "/news-manage/update/:id",
+          "/news-manage/preview/:id",
+          "/news-manage/draft",
+          "/audit-manage",
+          "/audit-manage/list",
+          "/publish-manage",
+          "/publish-manage/unpublished",
+          "/publish-manage/published",
+          "/publish-manage/sunset"
+        ]
+      },
+      "roleName": "区域编辑"
     },
     {
       "username": "咕噜墩子",
@@ -70,33 +112,48 @@
       "default": false,
       "region": "亚洲",
       "roleId": 3,
-      "id": 8
+      "id": 8,
+      "role": {
+        "id": 3,
+        "roleName": "区域编辑",
+        "roleType": 3,
+        "rights": [
+          "/home",
+          "/news-manage",
+          "/news-manage/list",
+          "/news-manage/add",
+          "/news-manage/update/:id",
+          "/news-manage/preview/:id",
+          "/news-manage/draft",
+          "/audit-manage",
+          "/audit-manage/list",
+          "/publish-manage",
+          "/publish-manage/unpublished",
+          "/publish-manage/published",
+          "/publish-manage/sunset"
+        ]
+      },
+      "roleName": "区域编辑"
     },
     {
-      "username": "丁一2222",
-      "password": "1111112222",
+      "username": "dingyi",
+      "password": "123456",
       "roleId": 2,
-      "region": "亚洲",
+      "region": "南美洲",
       "roleState": true,
       "default": false,
       "id": 9,
       "role": {
-        "id": 1,
-        "roleName": "超级管理员",
-        "roleType": 1,
+        "id": 2,
+        "roleName": "区域管理员",
+        "roleType": 2,
         "rights": [
+          "/home",
           "/user-manage",
           "/user-manage/add",
           "/user-manage/delete",
           "/user-manage/update",
           "/user-manage/list",
-          "/right-manage",
-          "/right-manage/role/list",
-          "/right-manage/right/list",
-          "/right-manage/role/update",
-          "/right-manage/role/delete",
-          "/right-manage/right/update",
-          "/right-manage/right/delete",
           "/news-manage",
           "/news-manage/list",
           "/news-manage/add",
@@ -110,11 +167,10 @@
           "/publish-manage",
           "/publish-manage/unpublished",
           "/publish-manage/published",
-          "/publish-manage/sunset",
-          "/home"
+          "/publish-manage/sunset"
         ]
       },
-      "roleName": "超级管理员"
+      "roleName": "区域管理员"
     },
     {
       "username": "dingyixxx333",
@@ -200,6 +256,13 @@
         "/user-manage/delete",
         "/user-manage/update",
         "/user-manage/list",
+        "/right-manage",
+        "/right-manage/role/list",
+        "/right-manage/right/list",
+        "/right-manage/role/update",
+        "/right-manage/role/delete",
+        "/right-manage/right/update",
+        "/right-manage/right/delete",
         "/news-manage",
         "/news-manage/list",
         "/news-manage/add",
@@ -207,13 +270,7 @@
         "/news-manage/preview/:id",
         "/news-manage/draft",
         "/news-manage/category",
-        "/audit-manage",
-        "/audit-manage/audit",
-        "/audit-manage/list",
-        "/publish-manage",
-        "/publish-manage/unpublished",
-        "/publish-manage/published",
-        "/publish-manage/sunset"
+        "/audit-manage/list"
       ]
     },
     {

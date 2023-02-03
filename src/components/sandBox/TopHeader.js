@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { Layout, Menu, theme } from 'antd';
 import {
     MenuFoldOutlined,
@@ -17,6 +17,14 @@ const { Header, Sider, Content } = Layout;
 export default function TopHeader(props) {
   const navi=useNavigate()
   const location=useLocation()
+  const [username, setusername] = useState('')
+  const [rolename, setrolename] = useState('')
+  useEffect(() => {
+    const {username,role:{roleName}}=JSON.parse(localStorage.getItem('token'))
+    setusername(username)
+    setrolename(roleName)
+  }, [])
+  
     const {
         token: { colorBgContainer },
       } = theme.useToken();
@@ -24,11 +32,11 @@ export default function TopHeader(props) {
       const items = [
         {
           key: '1',
-          label: (
+          label: 
             <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-              1st menu item
+              {rolename}
             </a>
-          ),
+          ,
         },
        
         {
@@ -44,7 +52,7 @@ export default function TopHeader(props) {
       onClick: () => props.setCollapsed(!props.collapsed),
     })}
     <div style={{float:'right'}}> 
-    <span style={{marginRight:'16px'}}>欢迎<span style={{color:'skyblue'}}>admin</span>回来</span>
+    <span style={{marginRight:'16px'}}>欢迎<span style={{color:'skyblue'}}>{username}</span>回来</span>
     <Dropdown menu={{ items }}>
     <a onClick={(e) => e.preventDefault()}>
       <Space>

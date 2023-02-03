@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.1.6",
     "axios": "^1.2.6",
+    "nprogress": "^0.2.0",
     "postcss": "^8.4.21",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^7.0.2",

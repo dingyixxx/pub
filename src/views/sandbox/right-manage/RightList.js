@@ -6,6 +6,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { connect } from "react-redux";
 import getRoutesAction from "../../../react-redux/getRoutesAction";
 import  './RightList.scss'
+import { useNavigate ,useLocation} from "react-router-dom";
 const { confirm } = Modal;
 function handleRightTreeData(data) {
   return data.map((item) => {
@@ -25,6 +26,7 @@ function handleRightTreeData(data) {
   });
 }
 function RightList(props) {
+
   const showConfirm = (record) => {
     confirm({
       title: "确认要删除权限吗?",
@@ -70,6 +72,7 @@ function RightList(props) {
     default:break
      
     }
+    setTimeout(() => {window.location.reload() }, 0);
   };
   const dataSource = useMemo(() => {
     const result = handleRightTreeData(

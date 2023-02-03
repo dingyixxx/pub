@@ -21,9 +21,9 @@
 //   }
 
 
-::-webkit-scrollbar{width:8px;background-color: #000c17;;}
+::-webkit-scrollbar{width:8px;background-color: #000c17;height:8px;border-radius: 4px;}
 ::-webkit-scrollbar-button{display: none;}
-::-webkit-scrollbar-thumb{width:8px;background-color:#1677ff;;border-radius: 4px;}
+::-webkit-scrollbar-thumb{width:8px;background-color:#1677ff;border-radius: 4px;}
 ::-webkit-scrollbar-track{width:8px;background-color:#ddd;border-radius: 4px;}
 .logo{
   color: white;
@@ -40,3 +40,5 @@
 .ant-table-wrapper{
     height: 100%;
 }
+
+

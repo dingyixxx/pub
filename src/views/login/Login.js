@@ -2,26 +2,23 @@ import React,{useCallback} from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import style from "./Login.module.scss";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, message, Form, Input } from "antd";
 import Particles from "react-tsparticles";
 import { loadFountainPreset } from "tsparticles-preset-fountain";
 import { loadFull } from "tsparticles";
 import axios from "axios";
-const onFinish = (values) => {
-  console.log('Success:', values);
-  axios.get("http://127.0.0.1:5000/users?_expand=role").then(res=>{
-    console.log(res)
-  })
-  localStorage.setItem('token',123)
-};
+
+
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 
 };
 
 export default function Login() {
+  const [messageApi, contextHolder] = message.useMessage();
   const navi = useNavigate();
   const location = useLocation();
+
  
 const customInit=async (engine)=>{
   // this adds the preset to tsParticles, you can safely use the
@@ -33,12 +30,25 @@ const options = {
 
   return (
     <div>
+      {contextHolder}
     <Particles id="tsparticles" init={customInit}  options={options} />
     <div className={style.loginPage}>
       <div className={style.login_form}>
-      <Form name="basic" labelCol={{ span: 5, }} wrapperCol={{ span: 16, }} onFinish={()=>{
-        onFinish()
-        navi(-1)
+      <Form name="basic" labelCol={{ span: 5, }} wrapperCol={{ span: 16, }} onFinish={(val)=>{
+        const {password,username}=val
+  axios.get(`http://127.0.0.1:5000/users?_expand=role&password=${password}&username=${username}&roleState=true`).then(res=>{
+    if(res.data.length>0){
+      console.log("🚀 ~ file: Login.js:41 ~ axios.get ~ res.data", res.data)
+      localStorage.setItem('token',JSON.stringify(res.data[0]))
+      navi(-1)
+    }else{
+      messageApi.open({
+        type: 'error',
+        content:'您输入的用户名或密码有误, 请检查后重新输入'
+      });
+    }
+  })
+
       }} onFinishFailed={onFinishFailed} autoComplete="off" >
         <h1 style={{textAlign:"center", color:'black'}}>小干拌</h1>
     <Form.Item label="用户名" name="username" rules={[ { required: true, message: '请输入用户名', } ]} >

@@ -4,7 +4,7 @@ import { Space, Table, Tag, Button, Modal, Popover, Select,Form, Input} from "an
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 export  default  forwardRef((props,ref)=>{
-  const {regionIsDisabled,setregionIsDisabled}=props
+  const {regionIsDisabled,setregionIsDisabled,checkRegionIsDisabled,checkRoleIdIsDisabled}=props
     const {roleOptions,regionOptions}=props
     
    return ( <Form
@@ -22,7 +22,8 @@ export  default  forwardRef((props,ref)=>{
 
             <Form.Item name="roleId" label="角色"
             rules={[ { required: true, message: '请选择角色', }, ]}>
-                <Select options={roleOptions} onChange={ (value) => {
+                <Select options={roleOptions.map(item=>{
+                return {...item,disabled:checkRoleIdIsDisabled(item.value)}})} onChange={ (value) => {
                 if(value===1){
                     ref.current.setFieldValue('region','')
                     setregionIsDisabled(true)
@@ -35,7 +36,8 @@ export  default  forwardRef((props,ref)=>{
 
             <Form.Item name="region" label="区域"
             rules={!regionIsDisabled?[ { required: true, message: '请选择区域', }, ]:''}>
-              <Select options={regionOptions} disabled={regionIsDisabled} />
+              <Select options={regionOptions.map(item=>{
+                return {...item,disabled:checkRegionIsDisabled(item.title)}})} disabled={regionIsDisabled} />
             </Form.Item>
           </Form>)
       
