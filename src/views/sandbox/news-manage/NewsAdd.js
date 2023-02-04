@@ -13,7 +13,7 @@ export default function NewsAdd() {
    const [options, setoptions] = useState([])
    const [formInfo, setformInfo] = useState({})
    const [content, setcontent] = useState('')
-   const User=localStorage.getItem('token')
+   const User=JSON.parse(localStorage.getItem('token'))
    useEffect(() => {
      axios.get('/categories').then(res=>{
         setoptions(res.data.map(item=>{return {...item,value:item.id,label:item.title}}))
@@ -22,30 +22,43 @@ export default function NewsAdd() {
 
    const handleEditContent=content=>setcontent(content)
    const handleSave=type=>{
-    axios.post('/news',{
+    console.log({
         ...formInfo,
         content,
         "region":User.region||"全球",
-        "author": User.username,
         "roleId":User.roleId ,
         "auditState": type,
         "publishState": 0,
         "createTime": Date.now(),
         "star": 0,
         "view": 0,
-        "publishTime": 0
-    }).then(res=>{
-        api.info({
-            message: `通知`,
-            description:
-              `您可以到${type===0?'草稿箱':'新闻列表'}中查看新闻`,
-            placement:'bottomRight'
-          });
-       setTimeout(() => {
-        navi(type===0?'/news-manage/draft':'/news-manage/list')
-        // window.location.reload()
-       }, 600);
+        "publishTime": 0,
+        "author": User.username
     })
+    // axios.post('/news',{
+    //     ...formInfo,
+    //     content,
+    //     "region":User.region||"全球",
+    //     "roleId":User.roleId ,
+    //     "auditState": type,
+    //     "publishState": 0,
+    //     "createTime": Date.now(),
+    //     "star": 0,
+    //     "view": 0,
+    //     "publishTime": 0,
+    //     "author": User.username
+    // }).then(res=>{
+    //     api.info({
+    //         message: `通知`,
+    //         description:
+    //           `您可以到${type===0?'草稿箱':'新闻列表'}中查看新闻`,
+    //         placement:'bottomRight'
+    //       });
+    //    setTimeout(() => {
+    //     navi(type===0?'/news-manage/draft':'/news-manage/list')
+    //     // window.location.reload()
+    //    }, 600);
+    // })
    }
    
   return (
