@@ -54,7 +54,12 @@ export default function NewsDraft() {
       {
         title: "新闻标题",
         dataIndex: "title",
-        render: (text) => <a>{text}</a>,
+        render: (text,record) => {
+            const url='/#/news-manage/preview/'+record.id
+            return <a href={url} >{text}</a>
+        },
+        width:280
+        
       },
       {
         title: "作者",

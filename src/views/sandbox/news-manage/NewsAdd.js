@@ -22,7 +22,7 @@ export default function NewsAdd() {
 
    const handleEditContent=content=>setcontent(content)
    const handleSave=type=>{
-    console.log({
+    axios.post('/news',{
         ...formInfo,
         content,
         "region":User.region||"全球",
@@ -34,31 +34,18 @@ export default function NewsAdd() {
         "view": 0,
         "publishTime": 0,
         "author": User.username
+    }).then(res=>{
+        api.info({
+            message: `通知`,
+            description:
+              `您可以到${type===0?'草稿箱':'新闻列表'}中查看新闻`,
+            placement:'bottomRight'
+          });
+       setTimeout(() => {
+        navi(type===0?'/news-manage/draft':'/news-manage/list')
+        // window.location.reload()
+       }, 600);
     })
-    // axios.post('/news',{
-    //     ...formInfo,
-    //     content,
-    //     "region":User.region||"全球",
-    //     "roleId":User.roleId ,
-    //     "auditState": type,
-    //     "publishState": 0,
-    //     "createTime": Date.now(),
-    //     "star": 0,
-    //     "view": 0,
-    //     "publishTime": 0,
-    //     "author": User.username
-    // }).then(res=>{
-    //     api.info({
-    //         message: `通知`,
-    //         description:
-    //           `您可以到${type===0?'草稿箱':'新闻列表'}中查看新闻`,
-    //         placement:'bottomRight'
-    //       });
-    //    setTimeout(() => {
-    //     navi(type===0?'/news-manage/draft':'/news-manage/list')
-    //     // window.location.reload()
-    //    }, 600);
-    // })
    }
    
   return (

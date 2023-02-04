@@ -19,6 +19,7 @@ import NewsAdd from '../../views/sandbox/news-manage/NewsAdd';
 import NewsList from '../../views/sandbox/news-manage/NewsList';
 import NewsDraft from '../../views/sandbox/news-manage/NewsDraft';
 import NewsCategory from '../../views/sandbox/news-manage/NewsCategory';
+import NewsPreview from '../../views/sandbox/news-manage/NewsPreview';
 const ROUTES_MAPPING_TABLE={
     '/home':<Home></Home>,
     '/user-manage/list':<UserList></UserList>,
@@ -32,7 +33,8 @@ const ROUTES_MAPPING_TABLE={
     '/news-manage/add':<NewsAdd></NewsAdd>,
     '/news-manage/list':<NewsList></NewsList>,
     '/news-manage/draft':<NewsDraft></NewsDraft>,
-    '/news-manage/category':<NewsCategory></NewsCategory>
+    '/news-manage/category':<NewsCategory></NewsCategory>,
+    '/news-manage/preview/:id':<NewsPreview></NewsPreview>
 }
 
 
@@ -51,7 +53,7 @@ const NewsRouter = () => {
     const {role:{rights}}=JSON.parse(localStorage.getItem('token'))
     return (
         <Routes>
-        { rights.filter(item=>{return (db_rights.filter(dbRight=>{return dbRight.pagepermisson===1})).map(item=>item.key).includes(item)}).map(auth=> <Route path={auth} key={auth} element={ROUTES_MAPPING_TABLE[auth]}></Route>) }
+        { rights.filter(item=>{return (db_rights.filter(dbRight=>{return dbRight.routepermisson===1||dbRight.pagepermisson===1})).map(item=>item.key).includes(item)}).map(auth=> <Route path={auth} key={auth} element={ROUTES_MAPPING_TABLE[auth]}></Route>) }
         <Route path='*'  element={<NoPermission></NoPermission>}></Route>
         </Routes>
     );
