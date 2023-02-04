@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useMemo } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import getRoutesAction from '../../react-redux/getRoutesAction'
 import store from '../../react-redux/store'
 import axios from "axios";
@@ -43,9 +43,12 @@ function handleData(data,arr) {
 
 
 function SideMenu(props) {
+  const dispatch=useDispatch()
+  const routesRawData=useSelector(state=>state.routesRawData)
   
   const {role:{rights}}=JSON.parse(localStorage.getItem('token'))
-  let items=handleData(JSON.parse(JSON.stringify(props.routesRawData)),rights)
+  // let items=handleData(JSON.parse(JSON.stringify(props.routesRawData)),rights)
+  let items=handleData(JSON.parse(JSON.stringify(routesRawData)),rights)
 
  
   
@@ -53,14 +56,19 @@ function SideMenu(props) {
   const navi = useNavigate();
   const location = useLocation();
   const [selectedKeys, setselectedKeys] = useState([location.pathname]);
+  useEffect(() => {
+    setselectedKeys([location.pathname])
+  }, [location.pathname])
+  
   const [openKeys, setopenKeys] = useState([]);
   useEffect(() => {
-    if(props.routesRawData.length===0){
-        props.dispatch(getRoutesAction())
-    }}, [props]);
+    if(routesRawData.length===0){
+        // props.dispatch(getRoutesAction())
+        dispatch(getRoutesAction())
+    }}, []);
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/children?_expand=right").then((res) => { setopenKeys([ res.data.filter((item) => { return item.key === location.pathname; })[0]?.right.key, ]); });
-  }, []);
+    axios.get("/children?_expand=right").then((res) => { setopenKeys([ res.data.filter((item) => { return item.key === location.pathname; })[0]?.right.key, ]); });
+  }, [location.pathname]);
   return (
     <Sider collapsible collapsed={props.collapsed} onCollapse={(value) => props.setCollapsed(value)}>
       <div style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", flexBasis: "100%", }} >
@@ -82,7 +90,8 @@ function SideMenu(props) {
   );
 }
 
-export default connect(state => {
-   return { routesRawData:state.routesRawData}
-	})(SideMenu
-)
+// export default connect(state => {
+//    return { routesRawData:state.routesRawData}
+// 	})(SideMenu
+// )
+export default SideMenu

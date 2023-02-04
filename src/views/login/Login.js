@@ -36,7 +36,7 @@ const options = {
       <div className={style.login_form}>
       <Form name="basic" labelCol={{ span: 5, }} wrapperCol={{ span: 16, }} onFinish={(val)=>{
         const {password,username}=val
-  axios.get(`http://127.0.0.1:5000/users?_expand=role&password=${password}&username=${username}&roleState=true`).then(res=>{
+  axios.get(`/users?_expand=role&password=${password}&username=${username}&roleState=true`).then(res=>{
     if(res.data.length>0){
       console.log("🚀 ~ file: Login.js:41 ~ axios.get ~ res.data", res.data)
       localStorage.setItem('token',JSON.stringify(res.data[0]))

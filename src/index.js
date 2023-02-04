@@ -4,6 +4,7 @@ import App from './App';
 import store from './react-redux/store'
 import 'antd/dist/reset.css';
 import { Provider } from 'react-redux';
+import './util/http'
 import './index.scss'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

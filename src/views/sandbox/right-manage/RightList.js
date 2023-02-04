@@ -3,7 +3,7 @@ import axios from "axios";
 import { Space, Table, Tag, Button, Modal, Popover, Switch } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ExclamationCircleFilled } from "@ant-design/icons";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import getRoutesAction from "../../../react-redux/getRoutesAction";
 import  './RightList.scss'
 import { useNavigate ,useLocation} from "react-router-dom";
@@ -25,8 +25,9 @@ function handleRightTreeData(data) {
     };
   });
 }
-function RightList(props) {
-
+function RightList() {
+  const routesRawData=useSelector(state=>state.routesRawData)
+  const dispatch=useDispatch()
   const showConfirm = (record) => {
     confirm({
       title: "确认要删除权限吗?",
@@ -37,15 +38,15 @@ function RightList(props) {
       onOk() {
         if (record.grade === 1) {
           axios
-            .delete("http://127.0.0.1:5000/rights/" + record.id)
+            .delete("/rights/" + record.id)
             .then((res) => {
-              props.dispatch(getRoutesAction());
+              dispatch(getRoutesAction());
             });
         } else {
           axios
-            .delete("http://127.0.0.1:5000/children/" + record.id)
+            .delete("/children/" + record.id)
             .then((res) => {
-              props.dispatch(getRoutesAction());
+              dispatch(getRoutesAction());
             });
         }
       },
@@ -55,19 +56,19 @@ function RightList(props) {
     });
   };
   useEffect(() => {
-    if (props.routesRawData.length === 0) {
-      props.dispatch(getRoutesAction());
+    if (routesRawData.length === 0) {
+      dispatch(getRoutesAction());
     }
-  }, [props]);
+  }, [dispatch, routesRawData.length]);
   const onChange = (checked,record) => {
     switch (record.grade) {
       case 1:
-        axios.patch("http://127.0.0.1:5000/rights/" + record.id,{ pagepermisson:record.pagepermisson===1?2:1 }) 
-        .then((res) => { props.dispatch(getRoutesAction()); });
+        axios.patch("/rights/" + record.id,{ pagepermisson:record.pagepermisson===1?2:1 }) 
+        .then((res) => { dispatch(getRoutesAction()); });
         break;
       case 2:
-        axios.patch("http://127.0.0.1:5000/children/" + record.id,{ pagepermisson:record.pagepermisson===1?2:1 }) 
-        .then((res) => { props.dispatch(getRoutesAction()); });
+        axios.patch("/children/" + record.id,{ pagepermisson:record.pagepermisson===1?2:1 }) 
+        .then((res) => { dispatch(getRoutesAction()); });
         break;
     default:break
      
@@ -76,10 +77,10 @@ function RightList(props) {
   };
   const dataSource = useMemo(() => {
     const result = handleRightTreeData(
-      JSON.parse(JSON.stringify(props.routesRawData))
+      JSON.parse(JSON.stringify(routesRawData))
     );
     return result;
-  }, [props.routesRawData]);
+  }, [routesRawData]);
   const columns = [
     {
       title: "ID",
@@ -132,6 +133,7 @@ function RightList(props) {
   );
 }
 
-export default connect((state) => {
-  return { routesRawData: state.routesRawData };
-})(RightList);
+// export default connect((state) => {
+//   return { routesRawData: state.routesRawData };
+// })(RightList);
+export default RightList;

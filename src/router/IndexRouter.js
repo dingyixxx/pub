@@ -31,20 +31,10 @@ function AuthCom(props) {
     return <Login></Login>
   }
 }
-const ROUTES_MAPPING_TABLE={
-  '/home':<Home></Home>,
-  '/user-manage/list':<UserList></UserList>,
-  '/right-manage/right/list':<RightList></RightList>,
-  '/right-manage/role/list':<RoleList></RoleList>,
-  '/audit-manage/audit':<Audit></Audit>,
-  '/audit-manage/list':<AuditList></AuditList>,
-  '/publish-manage/published':<Published></Published>,
-  '/publish-manage/unpublished':<Unpublished></Unpublished>,
-  '/publish-manage/sunset':<Sunset></Sunset>
-}
+
 
 export default function IndexRouter() {
-  const {role:{rights}}=JSON.parse(localStorage.getItem('token'))
+  // const {role:{rights}}=JSON.parse(localStorage.getItem('token'))
   return (
     <HashRouter>
         <Routes>

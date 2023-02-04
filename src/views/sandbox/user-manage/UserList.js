@@ -19,8 +19,8 @@ export default function UserList() {
   const [roleOptions, setroleOptions] = useState([])
   const [regionOptions, setregionOptions] = useState([])
   const [regionIsDisabled, setregionIsDisabled] = useState(false)
-  useEffect(() => { axios.get('http://127.0.0.1:5000/regions').then(res=>setregionOptions(res.data)) }, []);
-  useEffect(() => { axios.get('http://127.0.0.1:5000/roles').then(res=>setroleOptions(res.data.map(item=>{
+  useEffect(() => { axios.get('/regions').then(res=>setregionOptions(res.data)) }, []);
+  useEffect(() => { axios.get('/roles').then(res=>setroleOptions(res.data.map(item=>{
     return {...item,value:item.id,label:item.roleName}
   })) )}, []);
   useEffect(() => { initdata() }, []);
@@ -49,7 +49,7 @@ export default function UserList() {
     setisModalOpen(false);
   };
   function initdata(params) {
-    axios.get("http://127.0.0.1:5000/users?_expand=role").then(res=>{
+    axios.get("/users?_expand=role").then(res=>{
       const {roleId,username,region}=JSON.parse(localStorage.getItem('token'))
       const userList=res.data.filter(item=>{
         if(roleId===2){
@@ -72,7 +72,7 @@ export default function UserList() {
       cancelText: "取消",
       onOk() {
         axios
-            .delete("http://127.0.0.1:5000/users/" + record.id)
+            .delete("/users/" + record.id)
             .then((res) => {
               initdata()
             });
@@ -141,7 +141,7 @@ export default function UserList() {
       width: 200,
       render:(state,record)=>{return <Switch disabled={record.default} checked={record.roleState} onChange={checked=>{
         axios
-        .patch("http://127.0.0.1:5000/users/" + record.id,{roleState:checked})
+        .patch("/users/" + record.id,{roleState:checked})
         .then((res) => {
           initdata()
         });
@@ -181,8 +181,8 @@ export default function UserList() {
       const values=await  userInfoForm.current.validateFields()
       setConfirmLoading(true);
       if(formMode==='add'){ 
-        await axios.post("http://127.0.0.1:5000/users",{...values, "roleState": true, "default": false,})
-      }else{ await axios.patch("http://127.0.0.1:5000/users/"+currentUserId,{...currentUserInfo,...values})}
+        await axios.post("/users",{...values, "roleState": true, "default": false,})
+      }else{ await axios.patch("/users/"+currentUserId,{...currentUserInfo,...values})}
       await initdata()
       setConfirmLoading(false);
       setisModalOpen(false);

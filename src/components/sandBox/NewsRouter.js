@@ -12,8 +12,13 @@ import AuditList from '../../views/sandbox/audit-manage/AuditList';
 import Published from '../../views/sandbox/publish-manage/Published'
 import Unpublished from '../../views/sandbox/publish-manage/Unpublished';
 import Sunset from '../../views/sandbox/publish-manage/Sunset'
+
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import NewsAdd from '../../views/sandbox/news-manage/NewsAdd';
+import NewsList from '../../views/sandbox/news-manage/NewsList';
+import NewsDraft from '../../views/sandbox/news-manage/NewsDraft';
+import NewsCategory from '../../views/sandbox/news-manage/NewsCategory';
 const ROUTES_MAPPING_TABLE={
     '/home':<Home></Home>,
     '/user-manage/list':<UserList></UserList>,
@@ -23,7 +28,11 @@ const ROUTES_MAPPING_TABLE={
     '/audit-manage/list':<AuditList></AuditList>,
     '/publish-manage/published':<Published></Published>,
     '/publish-manage/unpublished':<Unpublished></Unpublished>,
-    '/publish-manage/sunset':<Sunset></Sunset>
+    '/publish-manage/sunset':<Sunset></Sunset>,
+    '/news-manage/add':<NewsAdd></NewsAdd>,
+    '/news-manage/list':<NewsList></NewsList>,
+    '/news-manage/draft':<NewsDraft></NewsDraft>,
+    '/news-manage/category':<NewsCategory></NewsCategory>
 }
 
 
@@ -32,8 +41,8 @@ const NewsRouter = () => {
    
     useEffect(() => {
         Promise.all(
-        [axios.get("http://127.0.0.1:5000/rights"),
-        axios.get("http://127.0.0.1:5000/children")]
+        [axios.get("/rights"),
+        axios.get("/children")]
         ).then(res=>{
             setdb_rights([...res[0].data,...res[1].data])
         })

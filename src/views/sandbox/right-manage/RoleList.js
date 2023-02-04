@@ -31,7 +31,7 @@ export default function RoleList() {
   };
   useEffect(() => { initdata() }, []);
   useEffect(() => {
-    axios.get("http://127.0.0.1:5000/rights?_embed=children").then(res=>{
+    axios.get("/rights?_embed=children").then(res=>{
       settreeData(res.data)
     })
   }, []);
@@ -40,7 +40,7 @@ export default function RoleList() {
   };
    const  handleOk = async () => {
     setConfirmLoading(true);
-   await axios.patch("http://127.0.0.1:5000/roles/" + roleId,{
+   await axios.patch("/roles/" + roleId,{
       rights:checkedKeys
     })
     await initdata()
@@ -51,7 +51,7 @@ export default function RoleList() {
     setisModalOpen(false);
   };
   function initdata(params) {
-    axios.get("http://127.0.0.1:5000/roles").then(res=>{
+    axios.get("/roles").then(res=>{
       setdataSource(res.data)
  })
   }
@@ -64,7 +64,7 @@ export default function RoleList() {
       cancelText: "取消",
       onOk() {
         axios
-            .delete("http://127.0.0.1:5000/roles/" + record.id)
+            .delete("/roles/" + record.id)
             .then((res) => {
               initdata()
             });
