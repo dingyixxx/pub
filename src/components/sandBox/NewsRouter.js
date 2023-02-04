@@ -20,6 +20,7 @@ import NewsList from '../../views/sandbox/news-manage/NewsList';
 import NewsDraft from '../../views/sandbox/news-manage/NewsDraft';
 import NewsCategory from '../../views/sandbox/news-manage/NewsCategory';
 import NewsPreview from '../../views/sandbox/news-manage/NewsPreview';
+import NewsUpdate from '../../views/sandbox/news-manage/NewsUpdate';
 const ROUTES_MAPPING_TABLE={
     '/home':<Home></Home>,
     '/user-manage/list':<UserList></UserList>,
@@ -34,7 +35,8 @@ const ROUTES_MAPPING_TABLE={
     '/news-manage/list':<NewsList></NewsList>,
     '/news-manage/draft':<NewsDraft></NewsDraft>,
     '/news-manage/category':<NewsCategory></NewsCategory>,
-    '/news-manage/preview/:id':<NewsPreview></NewsPreview>
+    '/news-manage/preview/:id':<NewsPreview></NewsPreview>,
+    '/news-manage/update/:id':<NewsUpdate></NewsUpdate>,
 }
 
 

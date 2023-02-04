@@ -32,6 +32,8 @@ export default function NewsSandBox(props) {
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
+            flex:1,
+            overflowY:'scroll'
           }}
         >
                     <NewsRouter></NewsRouter> 

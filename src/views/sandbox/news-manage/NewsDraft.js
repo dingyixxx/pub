@@ -3,6 +3,7 @@ import axios from "axios";
 import { Space, Table, Tag, Button, Modal, Popover, Switch,Tree } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ExclamationCircleFilled ,SendOutlined} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 const { confirm } = Modal;
 
 
@@ -10,6 +11,7 @@ export default function NewsDraft() {
     const [dataSource, setdataSource] = useState([])
     const [isModalOpen, setisModalOpen] = useState(false)
     const User=JSON.parse(localStorage.getItem('token'))
+    const navi=useNavigate()
 
     const [newsId, setnewsId] = useState('')
  
@@ -78,7 +80,7 @@ export default function NewsDraft() {
         render: (_, record) => (
           <Space size="middle">
               <Button danger shape="circle" onClick={() => { showConfirm(record); }} icon={<DeleteOutlined />}  />
-              <Button type="primary" shape="circle" onClick={()=> {showModal(record);newsId(record.id)}} icon={<EditOutlined />}/>
+              <Button type="primary" shape="circle" onClick={()=> {navi('/news-manage/update/'+record.id)}} icon={<EditOutlined />}/>
               <Button  type="default" shape="circle" onClick={() => {  }} icon={<SendOutlined />}  />
           </Space>
         ),
@@ -90,7 +92,7 @@ export default function NewsDraft() {
       <Table
         columns={columns}
         dataSource={dataSource}
-        pagination={{ pageSize: 4 }}
+        pagination={{ pageSize: 15 }}
         rowKey='id'
       />
     )
