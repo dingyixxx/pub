@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import { Space, Table, Tag, Button, Modal, Popover, Switch,Tree } from "antd";
+import { Space, Table, Tag, Button, Modal, Popover, Switch,notification } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ExclamationCircleFilled ,SendOutlined} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ const { confirm } = Modal;
 
 
 export default function NewsDraft() {
+    const [api, contextHolder] = notification.useNotification();
     const [dataSource, setdataSource] = useState([])
     const [isModalOpen, setisModalOpen] = useState(false)
     const User=JSON.parse(localStorage.getItem('token'))
@@ -81,7 +82,23 @@ export default function NewsDraft() {
           <Space size="middle">
               <Button danger shape="circle" onClick={() => { showConfirm(record); }} icon={<DeleteOutlined />}  />
               <Button type="primary" shape="circle" onClick={()=> {navi('/news-manage/update/'+record.id)}} icon={<EditOutlined />}/>
-              <Button  type="default" shape="circle" onClick={() => {  }} icon={<SendOutlined />}  />
+              <Button  type="default" shape="circle" onClick={() => { 
+                  axios.patch('/news/'+record.id,{
+                    "auditState": 1,
+                }).then(res=>{
+                    let type=1
+                    api.info({
+                        message: `通知`,
+                        description:
+                          `您可以到${type===0?'草稿箱':'审核列表'}中查看新闻`,
+                        placement:'bottomRight'
+                      });
+                   setTimeout(() => {
+                    navi(type===0?'/news-manage/draft':'/audit-manage/list')
+                    // window.location.reload()
+                   }, 700);
+                })
+               }} icon={<SendOutlined />}  />
           </Space>
         ),
       },
@@ -89,11 +106,14 @@ export default function NewsDraft() {
   
   
     return (
+        <>
+        {contextHolder}
       <Table
         columns={columns}
         dataSource={dataSource}
         pagination={{ pageSize: 15 }}
         rowKey='id'
       />
+      </>
     )
 }

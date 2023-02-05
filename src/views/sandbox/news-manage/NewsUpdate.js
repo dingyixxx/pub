@@ -21,8 +21,6 @@ export default function NewsUpdate() {
      })
    }, [])
    const params=useParams()
-    const auditStates=["未审核","审核中","审核成功","审核失败"]
-    const publishState=["未发布","发布中","发布成功","已下线"]
     useEffect(() => {
      axios.get(`/news/${params.id}?_expand=role&_expand=category`).then(res=>{
         setnewsInfo(res.data)
@@ -40,29 +38,24 @@ export default function NewsUpdate() {
 
    const handleEditContent=content=>setcontent(content)
    const handleSave=type=>{
-    axios.post('/news',{
+    axios.patch('/news/'+params.id,{
         ...formInfo,
         content,
         "region":User.region||"全球",
         "roleId":User.roleId ,
         "auditState": type,
-        "publishState": 0,
-        "createTime": Date.now(),
-        "star": 0,
-        "view": 0,
-        "publishTime": 0,
         "author": User.username
     }).then(res=>{
         api.info({
             message: `通知`,
             description:
-              `您可以到${type===0?'草稿箱':'新闻列表'}中查看新闻`,
+              `您可以到${type===0?'草稿箱':'审核列表'}中查看新闻`,
             placement:'bottomRight'
           });
        setTimeout(() => {
-        navi(type===0?'/news-manage/draft':'/news-manage/list')
+        navi(type===0?'/news-manage/draft':'/audit-manage/list')
         // window.location.reload()
-       }, 600);
+       }, 700);
     })
    }
    
@@ -129,7 +122,7 @@ export default function NewsUpdate() {
     
   </div>
   <div className={current===1?style.active:style.hidden}>
-    <NewsEditor handleEditContent={handleEditContent}></NewsEditor>
+    <NewsEditor handleEditContent={handleEditContent} content={content}></NewsEditor>
   </div>
   <div className={current===2?style.active:style.hidden}>
     <Button type='primary'  onClick={()=>{handleSave(0)}}>保存草稿箱</Button>
@@ -144,7 +137,6 @@ export default function NewsUpdate() {
             setcurrent(current+1)
         }).catch(err=>console.log(err))
     }else if(current===1){
-        console.log(formInfo,content)
         setcurrent(current+1)
 
     }

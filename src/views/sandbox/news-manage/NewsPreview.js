@@ -4,11 +4,13 @@ import { Button, Descriptions, Row, Statistic, Tag } from 'antd';
 import axios from 'axios'
 import moment from 'moment'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+export const AUDIT_STATES=["未审核","审核中","审核成功","审核失败"]
+export  const PUBLISH_STATES=["未发布","待发布","发布成功","已下线"]
+export  const COLOR_LIST=["black","gold","green","red"]
 export default function NewsPreview() {
     const params=useParams()
     const [newsInfo, setnewsInfo] = useState(null)
-    const auditStates=["未审核","审核中","审核成功","审核失败"]
-    const publishState=["未发布","发布中","发布成功","已下线"]
+   
     const navi=useNavigate()
     useEffect(() => {
      axios.get(`/news/${params.id}?_expand=role&_expand=category`).then(res=>{
@@ -32,8 +34,8 @@ export default function NewsPreview() {
         <Descriptions.Item label="创建时间">{moment(newsInfo?.createTime).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
         <Descriptions.Item label="发布时间">{newsInfo?.publishTime?moment(newsInfo?.publishTime).format('YYYY-MM-DD HH:mm:ss'):'-'}</Descriptions.Item>
         <Descriptions.Item label="区域">{newsInfo?.region}</Descriptions.Item>
-        <Descriptions.Item label="审核状态" contentStyle={{color:'red'}}>{auditStates[newsInfo?.auditState]}</Descriptions.Item>
-        <Descriptions.Item label="发布状态" contentStyle={{color:'red'}}>{publishState[newsInfo?.publishState]}</Descriptions.Item>
+        <Descriptions.Item label="审核状态" contentStyle={{color:COLOR_LIST[newsInfo?.auditState]}}>{AUDIT_STATES[newsInfo?.auditState]}</Descriptions.Item>
+        <Descriptions.Item label="发布状态" contentStyle={{color:COLOR_LIST[newsInfo?.publishState]}}>{PUBLISH_STATES[newsInfo?.publishState]}</Descriptions.Item>
         <Descriptions.Item label="访问数量">{newsInfo?.view}</Descriptions.Item>
         <Descriptions.Item label="点赞数量">{newsInfo?.star}</Descriptions.Item>
         <Descriptions.Item label="评论数量">0</Descriptions.Item>

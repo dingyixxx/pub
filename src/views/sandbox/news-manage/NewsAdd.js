@@ -42,9 +42,9 @@ export default function NewsAdd() {
             placement:'bottomRight'
           });
        setTimeout(() => {
-        navi(type===0?'/news-manage/draft':'/news-manage/list')
+        navi(type===0?'/news-manage/draft':'/audit-manage/list')
         // window.location.reload()
-       }, 600);
+       }, 700);
     })
    }
    
@@ -125,7 +125,6 @@ export default function NewsAdd() {
             setcurrent(current+1)
         }).catch(err=>console.log(err))
     }else if(current===1){
-        console.log(formInfo,content)
         setcurrent(current+1)
 
     }
