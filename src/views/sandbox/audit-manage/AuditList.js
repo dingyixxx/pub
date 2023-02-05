@@ -58,7 +58,8 @@ const AuditList = () => {
             <Space size="middle">
                 {record.auditState===2&&<Button onClick={()=>{
                      axios.patch(`/news/`+record.id,{
-                        publishState:2
+                        publishState:2,
+                        publishTime:Date.now()
                      }).then(async res=>{
                        await init()
                         api.info({
