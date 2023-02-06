@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Layout, Menu, theme } from 'antd';
 import {
     MenuFoldOutlined,
@@ -16,6 +17,8 @@ const { Header, Sider, Content } = Layout;
 
 export default function TopHeader(props) {
   const navi=useNavigate()
+  const dispatch=useDispatch()
+  const isCollapsed=useSelector(state=>{return state?.handleCollapseReducer.isCollapsed})
   const location=useLocation()
   const [username, setusername] = useState('')
   const [rolename, setrolename] = useState('')
@@ -47,9 +50,9 @@ export default function TopHeader(props) {
           }}>退出登录</span>}]
   return (
     <Header style={{ padding: '0px 24px', background: colorBgContainer }}>
-    {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+    {React.createElement(isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
       className: 'trigger',
-      onClick: () => props.setCollapsed(!props.collapsed),
+      onClick: () => dispatch({type:'handleCollapse'}),
     })}
     <div style={{float:'right'}}> 
     <span style={{marginRight:'16px'}}>欢迎<span style={{color:'skyblue'}}>{username}</span>回来</span>

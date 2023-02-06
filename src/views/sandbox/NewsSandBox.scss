@@ -46,4 +46,18 @@
   padding:6px 16px;
 }
 
+.example {
+  position: fixed;
+  box-sizing: border-box;
+  padding-top: 160px;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.3)
+}
 

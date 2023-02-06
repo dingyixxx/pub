@@ -26,7 +26,7 @@ function handleRightTreeData(data) {
   });
 }
 function RightList() {
-  const routesRawData=useSelector(state=>state.routesRawData)
+  const routesRawData=useSelector(state=>state?.getRoutesReducer?.routesRawData)
   const dispatch=useDispatch()
   const showConfirm = (record) => {
     confirm({
@@ -73,7 +73,7 @@ function RightList() {
     default:break
      
     }
-    setTimeout(() => {window.location.reload() }, 0);
+    // setTimeout(() => {window.location.reload() }, 0);
   };
   const dataSource = useMemo(() => {
     const result = handleRightTreeData(

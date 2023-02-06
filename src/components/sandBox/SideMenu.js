@@ -44,7 +44,8 @@ function handleData(data,arr) {
 
 function SideMenu(props) {
   const dispatch=useDispatch()
-  const routesRawData=useSelector(state=>state.routesRawData)
+  const routesRawData=useSelector(state=>state?.getRoutesReducer?.routesRawData)
+  const isCollapsed=useSelector(state=>state?.handleCollapseReducer?.isCollapsed)
   
   const {role:{rights}}=JSON.parse(localStorage.getItem('token'))
   // let items=handleData(JSON.parse(JSON.stringify(props.routesRawData)),rights)
@@ -70,7 +71,7 @@ function SideMenu(props) {
     axios.get("/children?_expand=right").then((res) => { setopenKeys([ res.data.filter((item) => { return item.key === location.pathname; })[0]?.right.key, ]); });
   }, [location.pathname]);
   return (
-    <Sider collapsible collapsed={props.collapsed} onCollapse={(value) => props.setCollapsed(value)}>
+    <Sider collapsible collapsed={isCollapsed} onCollapse={(value) => dispatch({type:'handleCollapse'})}>
       <div style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", flexBasis: "100%", }} >
         <div className="logo">小干拌</div>
         <Menu

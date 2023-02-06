@@ -14,6 +14,8 @@ import Published from '../views/sandbox/publish-manage/Published'
 import Unpublished from '../views/sandbox/publish-manage/Unpublished'
 import Sunset from '../views/sandbox/publish-manage/Sunset'
 import { BrowserRouter } from 'react-router-dom'
+import News from '../views/news/News'
+import Detail from '../views/news/Detail'
 export function Redirect({ to }) {
   let navigate = useNavigate();
   useEffect(() => {
@@ -38,6 +40,8 @@ export default function IndexRouter() {
   return (
     <HashRouter>
         <Routes>
+        <Route path='/news' element={<News></News>}></Route>
+        <Route path='/detail/:id' element={<Detail></Detail>}></Route>
         <Route path='/login' element={<AuthCom><Login></Login></AuthCom>}></Route>
         <Route path='*'  element={<AuthCom><NewsSandBox ></NewsSandBox></AuthCom>}></Route>
         <Route path='/' element={<Redirect to='/home'></Redirect>}></Route>

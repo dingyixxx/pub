@@ -11,13 +11,18 @@ import NewsRouter from '../../components/sandBox/NewsRouter'
 import { Layout, Menu, theme,notification } from 'antd';
 import './NewsSandBox.scss'
 import { Outlet } from 'react-router-dom'
+import Http from '../../util/http'
+
 import Redirect from '../../router/IndexRouter'
+import { Spin } from 'antd';
+import {  useDispatch, useSelector } from "react-redux";
 // import NProgress from 'nprogress'
 // import 'nprogress/nprogress.css'
 const { Header, Sider, Content } = Layout;
 export default function NewsSandBox(props) {
+
   const [api, contextHolder] = notification.useNotification();
-  const [collapsed, setCollapsed] = useState(false);
+  const isLoading=useSelector(state=>state.loadingReducer.isLoading)
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -25,9 +30,9 @@ export default function NewsSandBox(props) {
     <>
     {contextHolder}
     <Layout>
-      <SideMenu collapsed={collapsed} setCollapsed={setCollapsed}></SideMenu>
+      <SideMenu ></SideMenu>
       <Layout className="site-layout">
-      <TopHeader collapsed={collapsed} setCollapsed={setCollapsed} ></TopHeader>
+      <TopHeader  ></TopHeader>
         <Content
           style={{
             margin: '24px 16px',
@@ -38,6 +43,8 @@ export default function NewsSandBox(props) {
             overflowY:'scroll'
           }}
         >
+    <Spin spinning={isLoading} style={{position:'fixed',left:'50vw',top:'50vh'}}/>
+        
                     <NewsRouter></NewsRouter> 
 
         </Content>

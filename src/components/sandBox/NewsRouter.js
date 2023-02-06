@@ -12,7 +12,6 @@ import AuditList from '../../views/sandbox/audit-manage/AuditList';
 import Published from '../../views/sandbox/publish-manage/Published'
 import Unpublished from '../../views/sandbox/publish-manage/Unpublished';
 import Sunset from '../../views/sandbox/publish-manage/Sunset'
-
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import NewsAdd from '../../views/sandbox/news-manage/NewsAdd';
@@ -55,9 +54,11 @@ const NewsRouter = () => {
     const {role:{rights}}=JSON.parse(localStorage.getItem('token'))
     return (
         <Routes>
+        
         { rights.filter(item=>{return (db_rights.filter(dbRight=>{return dbRight.routepermisson===1||dbRight.pagepermisson===1})).map(item=>item.key).includes(item)}).map(auth=> <Route path={auth} key={auth} element={ROUTES_MAPPING_TABLE[auth]}></Route>) }
         <Route path='*'  element={<NoPermission></NoPermission>}></Route>
         </Routes>
+
     );
 }
 
